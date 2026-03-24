@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= titre %> - <%= departement.titre %></title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    /* NAVBAR */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--secondary-color) !important;
+        }
+
+        .nav-link {
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .btn-connexion {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-connexion:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-inscription {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-inscription:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+    /* CARTE DÉTAIL DÉPARTEMENT */
+    .dept-hero {
+      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      color: white;
+      padding: 4rem 0 3rem 0;
+      margin-bottom: 3rem;
+    }
+
+    .dept-hero h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .dept-hero p.lead {
+      opacity: 0.85;
+      font-size: 1.1rem;
+    }
+
+    .dept-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .dept-content {
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      margin-bottom: 3rem;
+    }
+
+    .dept-content h2 {
+      color: var(--primary-color);
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary-color);
+      padding-left: 1rem;
+    }
+
+    .dept-content p {
+      color: #555;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .btn-retour {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.8rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-retour:hover {
+      background-color: #c0392b;
+      transform: translateX(-5px);
+      color: white;
+    }
+
+    /* FOOTER */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1rem 0;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-menu a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-menu a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+            color: #bdc3c7;
+        }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/acceuil">
+                <i class="bi bi-mortarboard-fill"></i> MonÉcole
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/acceuil">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/departement" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Départements
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Informatique</a></li>
+                            <li><a class="dropdown-item" href="#">Mathématiques</a></li>
+                            <li><a class="dropdown-item" href="#">Physique</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Tous les départements</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/scolarite">Scolarité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/concours">Concours</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-connexion" href="/connexion">Connexion</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-inscription" href="/inscription">Inscription</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+  <!-- HERO DU DÉPARTEMENT -->
+  <section class="dept-hero">
+    <div class="container">
+      <!-- <a href="/acceuil" class="btn-retour mb-4">← Retour à l'accueil</a> -->
+      <h1 class="mt-3"><%= departement.titre %></h1>
+      <p class="lead">Découvrez toutes les informations sur ce département</p>
+    </div>
+  </section>
+
+  <!-- CONTENU PRINCIPAL -->
+  <div class="container">
+    <div class="row align-items-start g-5">
+
+      <!-- IMAGE -->
+      <div class="col-lg-5">
+        <img 
+          src="<%= departement.image %>" 
+          alt="<%= departement.alt %>" 
+          class="dept-image"
+        >
+      </div>
+
+      <!-- TEXTE -->
+      <div class="col-lg-7">
+        <div class="dept-content">
+          <h2><%= departement.titre %></h2>
+          <p><%= departement.description %></p>
+        </div>
+        <a href="/acceuil" class="btn-retour">← Retour à l'accueil</a><br><br>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+<footer class="footer">
+        <div class="container footer-content">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="footer-logo">
+                        <i class="bi bi-mortarboard-fill"></i> MonÉcole
+                    </div>
+                    <p class="text-muted">
+                        Excellence académique et innovation pédagogique pour votre réussite professionnelle.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Menu</h5>
+                    <ul class="footer-menu">
+                        <li><a href="/acceuil">Accueil</a></li>
+                        <li><a href="#">Départements</a></li>
+                        <li><a href="/scolarite">Scolarité</a></li>
+                        <li><a href="/concours">Concours</a></li>
+                        <li><a href="/connexion">Connexion</a></li>
+                        <li><a href="/inscription">Inscription</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="footer-menu">
+                        <li><i class="bi bi-geo-alt-fill"></i> Yaoundé, Cameroun</li>
+                        <li><i class="bi bi-telephone-fill"></i> +237 XXX XXX XXX</li>
+                        <li><i class="bi bi-envelope-fill"></i> contact@monecole.cm</li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <p class="mb-0">© 2024 MonÉcole. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

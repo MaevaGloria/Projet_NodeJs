@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUT de DOUALA : <%= titre %></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        /* Styles personnalisés */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* BLOC 1 - Navbar */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--secondary-color) !important;
+        }
+
+        .nav-link {
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .btn-connexion {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-connexion:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-inscription {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-inscription:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* BLOC 2 - Carrousel principal */
+        .hero-carousel {
+            margin-top: 0;
+        }
+
+        .carousel-item {
+            height: 500px;
+            position: relative;
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            filter: brightness(0.7);
+        }
+
+        .carousel-caption {
+            background: rgba(0,0,0,0.5);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        /* BLOC 3 - Section Bienvenue */
+        /* Section globale */
+        .welcome-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        /* Wrapper image pour contrôler la hauteur */
+        .welcome-image-wrapper {
+            height: 100%;
+            max-height: 500px;       /*  ajuste si tu veux plus/moins haut */
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        /* Image longue (portrait) */
+        .welcome-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;      /*  garde la qualité */
+            object-position: center;
+        }
+
+        /* Texte centré verticalement et limité à la hauteur image */
+        .welcome-text {
+            height: 100%;
+            max-height: 500px;       /*  même valeur que l'image */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /*  CENTRAGE vertical */
+            padding: 1.5rem;
+        }
+
+        /* Amélioration lisibilité */
+        .welcome-text h2 {
+            margin-bottom: 1rem;
+        }
+
+        .welcome-text p {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        /* BLOC 4 - Cartes dynamiques */
+        .cards-section {
+            padding: 5rem 0;
+            background-color: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .custom-card {
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .custom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .custom-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .custom-card .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-card .card-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .custom-card .card-text {
+            flex-grow: 1;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .text-truncate-custom {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+
+            -webkit-line-clamp: 4; /* Chrome, Edge, Safari */
+            line-clamp: 4;         /* Standard (futur / partiel) */
+        }
+
+
+        .text-truncate-custom.expanded {
+            -webkit-line-clamp: unset;
+            line-clamp: unset;
+        }
+
+
+        .btn-voir-plus {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .btn-voir-plus:hover {
+            background-color: #2980b9;
+            transform: translateX(5px);
+        }
+
+        /* BLOC 5 - Carrousel des partenaires */
+        .partners-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .partner-logo {
+            height: 100px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .partner-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .partners-carousel .carousel-item {
+            height: 250px;
+        }
+
+        /* BLOC 6 - Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1rem 0;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-menu a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-menu a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+            color: #bdc3c7;
+        }
+
+        /* Responsive - Masquer certains blocs sur mobile */
+        @media (max-width: 768px) {
+            .hero-carousel,
+            .partners-section,
+            .footer-content {
+                display: none !important;
+            }
+
+            .carousel-item {
+                height: 300px;
+            }
+
+              .welcome-image-wrapper,
+                .welcome-text {
+                    max-height: none;
+                }
+
+                .welcome-text {
+                    padding: 1rem 0;
+                }
+
+            /* .welcome-section {
+                padding: 3rem 0;
+            } */
+
+            .cards-section {
+                padding: 3rem 0;
+            }
+
+            .footer {
+                padding: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- BLOC 1 - NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/acceuil">
+                <i class="bi bi-mortarboard-fill"></i> MonÉcole
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/acceuil">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/departement" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Départements
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Informatique</a></li>
+                            <li><a class="dropdown-item" href="#">Mathématiques</a></li>
+                            <li><a class="dropdown-item" href="#">Physique</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Tous les départements</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/scolarite">Scolarité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/concours">Concours</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-connexion" href="/connexion">Connexion</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-inscription" href="/inscription">Inscription</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BLOC 2 - CARROUSEL PRINCIPAL -->
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <% carrousel.forEach(function(carrousel, index) { %>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>" <% if(index === 0) { %>aria-current="true"<% } %> aria-label="Slide <%= index + 1 %>"></button>
+            <% }); %>
+        </div>
+        <div class="carousel-inner">
+            <% carrousel.forEach(function(carrousel, index) { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                    <img src="<%= carrousel.image %>" class="d-block w-100" alt="<%= carrousel.alt %>">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1><%= carrousel.titre %></h1>
+                        <p><%= carrousel.description %></p>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div><br><br>
+
+    <!-- BLOC 3 - SECTION BIENVENUE -->
+    <section class="welcome-section">
+        <div class="container">
+            <% welcome.forEach(function(welcome) { %>
+
+            <div class="row align-items-stretch">
+                
+                <!-- IMAGE -->
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="welcome-image-wrapper">
+                        <img src="<%= welcome.image %>" alt="<%= welcome.alt %>" class="welcome-image">
+
+                        <!-- <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600"
+                            alt="Campus"
+                            class="welcome-image"> -->
+                    </div>
+                </div>
+
+            <!-- TEXTE -->
+            <div class="col-md-6">
+                <div class="welcome-text">
+                    
+                        <h2><%= welcome.titre %></h2>
+                        <p><%= welcome.description %></p>
+                    <% }); %>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOC 4 - CARTES DYNAMIQUES -->
+<section class="cards-section">
+    <div class="container">
+        <h2 class="section-title">Nos Départements</h2>
+        <div class="row g-4">
+            <% departement.forEach(function(departement) { %>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card custom-card">
+                        <img src="<%= departement.image %>" class="card-img-top" alt="<%= departement.alt %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= departement.titre %></h5>
+                            <p class="card-text text-truncate-custom" data-collapsed="true">
+                                <%= departement.description %>
+                            </p>
+                           <a href="/departement/<%= departement.id %>" class="btn btn-voir-plus">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+    <!-- BLOC 5 - CARROUSEL DES PARTENAIRES -->
+    <section class="partners-section">
+        <div class="container">
+            <h2 class="section-title">Nos Partenaires</h2>
+            <% patners.forEach(function(patners) { %>
+
+            <div id="partnersCarousel" class="carousel slide partners-carousel" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-3 text-center">
+                                <img src="<%= patners.image %>" class="partner-logo" alt="<%= patners.alt %>">
+                                <!-- <img src="/images/international-student-day-banner-design/icxh_5r4u_220908.jpg" class="partner-logo" alt="Partenaire 1"> -->
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="<%= patners.image %>" class="partner-logo" alt="<%= patners.alt %>">
+                                <!-- <img src="/images/vector-education-logo/ba64e5d4-afa8-4259-be41-8321adbad79f.jpg" class="partner-logo" alt="Partenaire 2"> -->
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="<%= patners.image %>" class="partner-logo" alt="<%= patners.alt %>">
+                                <!-- <img src="/images/departement4_fichiers/100w-9dJdce1GwaY.webp" class="partner-logo" alt="Partenaire 3"> -->
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="<%= patners.image %>" class="partner-logo" alt="<%= patners.alt %>">
+                                <!-- <img src="/images/departement4_fichiers/100w-_RbHfza9brY.webp" class="partner-logo" alt="Partenaire 4"> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-3 text-center">
+                                <img src="/images/international-student-day-banner-design/icxh_5r4u_220908.jpg" class="partner-logo" alt="Partenaire 1">
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="/images/vector-education-logo/ba64e5d4-afa8-4259-be41-8321adbad79f.jpg" class="partner-logo" alt="Partenaire 2">
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="/images/departement4_fichiers/100w-9dJdce1GwaY.webp" class="partner-logo" alt="Partenaire 3">
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="/images/departement4_fichiers/100w-_RbHfza9brY.webp" class="partner-logo" alt="Partenaire 4">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-3 text-center">
+                                <img src="/images/international-student-day-banner-design/icxh_5r4u_220908.jpg" class="partner-logo" alt="Partenaire 1">
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="/images/vector-education-logo/ba64e5d4-afa8-4259-be41-8321adbad79f.jpg" class="partner-logo" alt="Partenaire 2">
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="/images/departement4_fichiers/100w-9dJdce1GwaY.webp" class="partner-logo" alt="Partenaire 3">
+                            </div>
+                            <div class="col-3 text-center">
+                                <img src="/images/departement4_fichiers/100w-_RbHfza9brY.webp" class="partner-logo" alt="Partenaire 4">
+                            </div>
+                        </div>
+                    </div> -->
+                    <% }); %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOC 6 - FOOTER -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="footer-logo">
+                        <i class="bi bi-mortarboard-fill"></i> MonÉcole
+                    </div>
+                    <p class="text-muted">
+                        Excellence académique et innovation pédagogique pour votre réussite professionnelle.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Menu</h5>
+                    <ul class="footer-menu">
+                        <li><a href="/acceuil">Accueil</a></li>
+                        <li><a href="#">Départements</a></li>
+                        <li><a href="/scolarite">Scolarité</a></li>
+                        <li><a href="/concours">Concours</a></li>
+                        <li><a href="/connexion">Connexion</a></li>
+                        <li><a href="/inscription">Inscription</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="footer-menu">
+                        <li><i class="bi bi-geo-alt-fill"></i> Yaoundé, Cameroun</li>
+                        <li><i class="bi bi-telephone-fill"></i> +237 XXX XXX XXX</li>
+                        <li><i class="bi bi-envelope-fill"></i> contact@monecole.cm</li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <p class="mb-0">© 2024 MonÉcole. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Auto-play carrousel avec intervalle personnalisé
+        const heroCarousel = document.getElementById('heroCarousel');
+        const partnersCarousel = document.getElementById('partnersCarousel');
+        
+        if (heroCarousel) {
+            new bootstrap.Carousel(heroCarousel, {
+                interval: 4000,
+                wrap: true
+            });
+        }
+        
+        if (partnersCarousel) {
+            new bootstrap.Carousel(partnersCarousel, {
+                interval: 3000,
+                wrap: true
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title> -->
+
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body> -->
+
+<!-- Navbar -->
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/acceuil">Mon Site</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"> -->
+          <!-- Route Express vers la page d'accueil -->
+          <!-- <a class="nav-link active" aria-current="page" href="/acceuil">Accueil</a>
+        </li>
+        <li class="nav-item"> -->
+          <!-- Route Express vers la page apropos -->
+          <!-- <a class="nav-link" href="/apropos">À propos</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+<!-- Contenu -->
+<!-- <main class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="mb-4 text-center">Accueil</h1> -->
+      <!-- <img src="/man.jpg" class="img-fluid mb-4" alt="Image"> -->
+      <p class="lead">
+        <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque repellendus sit, quae
+        debitis aliquid aperiam, atque qui exercitationem amet nisi autem incidunt adipisci,
+        eos excepturi. Dolore dolorem quae odio qui!
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur soluta, nisi quam
+        odio omnis quia. Quam et incidunt cumque quibusdam, aspernatur mollitia consequatur
+        ratione qui aperiam, tempore asperiores suscipit odio?
+      </p>
+    </div>
+  </div>
+</main> -->
+
+<!-- Bootstrap JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> -->
