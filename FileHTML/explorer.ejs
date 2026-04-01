@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= titre %></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Navbar — même style que layout principal */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--secondary-color) !important;
+        }
+        .nav-link { margin: 0 0.5rem; transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--secondary-color) !important; }
+        .btn-connexion, .btn-inscription {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .btn-connexion:hover, .btn-inscription:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Hero banner */
+        .explorer-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0 3rem;
+            text-align: center;
+        }
+        .explorer-hero h1 {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .explorer-hero p {
+            opacity: 0.85;
+            font-size: 1.1rem;
+        }
+
+        /* Carte Google Maps */
+        #map {
+            width: 100%;
+            height: 550px;
+        }
+
+        /* Bandeau d'infos sous la carte */
+        .map-info {
+            background-color: white;
+            border-top: 3px solid var(--secondary-color);
+            padding: 2rem 0;
+        }
+        .info-item {
+            text-align: center;
+            padding: 1rem;
+            border-right: 1px solid #eee;
+        }
+        .info-item:last-child { border-right: none; }
+        .info-item i {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .info-item strong {
+            display: block;
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+        .info-item span {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Footer simplifié */
+        .footer {
+            background-color: var(--primary-color);
+            color: #bdc3c7;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            #map { height: 350px; }
+            .info-item { border-right: none; border-bottom: 1px solid #eee; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/acceuil">
+                <i class="bi bi-mortarboard-fill"></i> MonÉcole
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/acceuil">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/departement" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Départements
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Informatique</a></li>
+                            <li><a class="dropdown-item" href="#">Mathématiques</a></li>
+                            <li><a class="dropdown-item" href="#">Physique</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Tous les départements</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/scolarite">Scolarité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/concours">Concours</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/explorer">Explorer</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-connexion" href="/connexion">Connexion</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-inscription" href="/inscription">Inscription</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO BANNER -->
+    <section class="explorer-hero">
+        <div class="container">
+            <h1><i class="bi bi-geo-alt-fill"></i> Explorer le Cameroun</h1>
+            <p>Découvrez notre localisation et notre environnement géographique</p>
+        </div>
+    </section>
+
+    <!-- CARTE GOOGLE MAPS -->
+    <div id="map"></div>
+
+    <!-- INFOS SOUS LA CARTE -->
+    <section class="map-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="info-item">
+                        <i class="bi bi-flag-fill"></i>
+                        <strong>Cameroun</strong>
+                        <span>Pays</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="info-item">
+                        <i class="bi bi-building-fill"></i>
+                        <strong>Yaoundé</strong>
+                        <span>Capitale</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="info-item">
+                        <i class="bi bi-globe-americas"></i>
+                        <strong>475 442 km²</strong>
+                        <span>Superficie</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="info-item">
+                        <i class="bi bi-people-fill"></i>
+                        <strong>Afrique Centrale</strong>
+                        <span>Région</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p class="mb-0">© 2024 MonÉcole. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Google Maps API — remplacez YOUR_API_KEY par votre vraie clé -->
+    <script>
+        function initMap() {
+            const cameroun = { lat: 7.3697, lng: 12.3547 };
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 6,
+                center: cameroun,
+                mapTypeId: "roadmap",
+                restriction: {
+                    latLngBounds: {
+                        north: 13.1,
+                        south: 1.6,
+                        east: 16.2,
+                        west: 8.3
+                    },
+                    strictBounds: false
+                }
+            });
+
+            // Marqueur sur Yaoundé
+            new google.maps.Marker({
+                position: { lat: 3.848, lng: 11.5021 },
+                map: map,
+                title: "Yaoundé — Capitale",
+                icon: {
+                    url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
+                }
+            });
+
+            // Marqueur sur Douala (siège de l'IUT)
+            new google.maps.Marker({
+                position: { lat: 4.0511, lng: 9.7679 },
+                map: map,
+                title: "Douala — IUT de Douala",
+                icon: {
+                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                }
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARqERcI7NumVMYabwccDeq3ZftbqAaC0Q&callback=initMap">
+    </script>
+</body>
+</html>

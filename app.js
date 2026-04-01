@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const myConnection = require('express-myconnection');
+const multer = require('multer');
 
 const optionBd = {
   host: 'localhost',
@@ -12,6 +13,31 @@ const optionBd = {
 
 const app = express();
 const path = require('path');
+
+// Configuration de multer pour les uploads d'images
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images/')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Seules les images sont acceptées'));
+    }
+  }
+});
+
+//Extraction des données avec un Middleware
+app.use(express.urlencoded({extended: false}))
 
 //Definition du middleware 
 app.use(myConnection(mysql, optionBd, 'pool'))
@@ -84,9 +110,40 @@ app.get('/departement/:id', (req, res) => {
   });
 });
 
-// app.get('/apropos', (req, res) => {
-//   res.status(200).sendFile("FileHTML/apropos.html", { root: __dirname });
-// });
+app.get('/ajoutdepartement', (req, res) => {
+  const titre = 'Ajouter un Département - MonÉcole';
+  res.status(200).render('ajoutdepartement', { titre });
+});
+
+app.post('/ajoutdepartement', upload.single('image'), (req, res) => {
+  let titre = req.body.nom
+  let description = req.body.description
+  let image = req.file ? '/images/' + req.file.filename : null
+  let alt = req.body.alt
+
+  if (!titre || !description || !image) {
+    return res.status(400).render('erreur', { titre: 'Erreur - Champs manquants' });
+  }
+
+  req.getConnection((erreur, connection)=>{
+    if(erreur){
+      console.log(erreur);
+    }else{
+      connection.query('INSERT INTO departements(id, titre, description, image, alt) VALUES(?, ?, ?, ?, ?)', [null, titre, description, image, alt], (erreur, departement)=>{
+        if(erreur) {
+          console.log(erreur);
+        }else {
+          res.status(302).redirect("/acceuil");
+        }
+      });
+    }
+  });
+});
+
+app.get('/explorer', (req, res) => {
+  const titre = 'Explorer - MonÉcole';
+    res.status(200).render('explorer', { titre });
+});
 
 app.get('/inscription', (req, res) => {
   const titre = 'Inscription';

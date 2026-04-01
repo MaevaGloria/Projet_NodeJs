@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= titre %></title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--secondary-color) !important;
+    }
+
+    .nav-link {
+      margin: 0 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary-color) !important;
+    }
+
+    .btn-connexion {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-connexion:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      color: white;
+    }
+
+    .btn-inscription {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-inscription:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      color: white;
+    }
+
+    /* FORMULAIRE D'AJOUT */
+    .form-hero {
+      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      color: white;
+      padding: 4rem 0 3rem 0;
+      margin-bottom: 3rem;
+    }
+
+    .form-hero h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .form-hero p.lead {
+      opacity: 0.85;
+      font-size: 1.1rem;
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      margin-bottom: 3rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-select {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Image Upload */
+    .image-upload-area {
+      border: 2px dashed #e0e0e0;
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      background-color: #fafafa;
+    }
+
+    .image-upload-area:hover {
+      border-color: var(--secondary-color);
+      background-color: #f0f8ff;
+    }
+
+    .image-upload-area input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+
+    .upload-text {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .upload-hint {
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    .image-preview {
+      margin-top: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .image-preview img {
+      max-width: 200px;
+      max-height: 150px;
+      border-radius: 10px;
+      border: 2px solid #e0e0e0;
+      object-fit: cover;
+    }
+
+    .remove-image {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .remove-image:hover {
+      background: #c0392b;
+      transform: scale(1.1);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+      color: white;
+    }
+
+    .btn-retour {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.8rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-retour:hover {
+      background-color: #5a6268;
+      transform: translateX(-5px);
+      color: white;
+    }
+
+    /* Message d'alerte */
+    .alert-custom {
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* FOOTER */
+    .footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 3rem 0 1rem 0;
+      margin-top: 3rem;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+
+    .footer-menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-menu li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-menu a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-menu a:hover {
+      color: var(--secondary-color);
+    }
+
+    .copyright {
+      text-align: center;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 2rem;
+      color: #bdc3c7;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1.5rem;
+      }
+      
+      .form-hero h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/acceuil">
+        <i class="bi bi-mortarboard-fill"></i> MonÉcole
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/acceuil">Accueil</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Départements
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Informatique</a></li>
+              <li><a class="dropdown-item" href="#">Mathématiques</a></li>
+              <li><a class="dropdown-item" href="#">Physique</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Tous les départements</a></li>
+              <li><a class="dropdown-item" href="ajout-departement.html">➕ Ajouter un département</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/scolarite">Scolarité</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/concours">Concours</a>
+          </li>
+          <li class="nav-item ms-2">
+            <a class="btn btn-connexion" href="/connexion">Connexion</a>
+          </li>
+          <li class="nav-item ms-2">
+            <a class="btn btn-inscription" href="/inscription">Inscription</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO DU FORMULAIRE -->
+  <section class="form-hero">
+    <div class="container">
+      <h1 class="mt-3"><i class="bi bi-plus-circle-fill"></i> Ajouter un Département</h1>
+      <p class="lead">Créez un nouveau département en remplissant le formulaire ci-dessous</p>
+    </div>
+  </section>
+
+  <!-- FORMULAIRE D'AJOUT AVEC ACTION -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="form-container">
+          <!-- FORMULAIRE AVEC ACTION VERS LE FICHIER DE TRAITEMENT PHP -->
+          <form action="/ajoutdepartement" method="POST" enctype="multipart/form-data">
+  
+            <div class="mb-4">
+              <label for="nom" class="form-label">
+                <i class="bi bi-tag-fill"></i> Nom du département <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control" id="nom" name="nom" 
+                    placeholder="Ex: Informatique, Marketing, Génie Civil..." 
+                    maxlength="100">
+              <small class="text-muted">Maximum 100 caractères</small>
+            </div>
+
+            <div class="mb-4">
+              <label for="description" class="form-label">
+                <i class="bi bi-file-text-fill"></i> Description <span class="text-danger">*</span>
+              </label>
+              <textarea class="form-control" id="description" name="description" 
+                        rows="5" placeholder="Décrivez les missions, objectifs et particularités de ce département..."
+                        maxlength="1000" required></textarea>
+              <small class="text-muted">Maximum 1000 caractères</small>
+            </div>
+
+            <div class="mb-4">
+              <label for="alt" class="form-label">
+                <i class="bi bi-image-alt"></i> Texte alternatif de l'image <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control" id="alt" name="alt"
+                    placeholder="Ex: bâtiment du département de génie civil"
+                    maxlength="255" required>
+              <small class="text-muted">Décris brièvement l’image</small>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">
+                <i class="bi bi-image-fill"></i> Image du département <span class="text-danger">*</span>
+              </label>
+              <div class="image-upload-area" id="imageUploadArea">
+                <div class="upload-icon">
+                  <i class="bi bi-cloud-upload"></i>
+                </div>
+                <div class="upload-text">Cliquez ou glissez une image ici</div>
+                <div class="upload-hint">Formats acceptés : JPG, PNG, GIF, WEBP (max 5MB)</div>
+                <input type="file" id="image" name="image" accept="image/*" required>
+              </div>
+              <div class="image-preview" id="imagePreview" style="display: none;">
+                <img id="previewImg" src="" alt="Aperçu">
+                <button type="button" class="remove-image" id="removeImageBtn">×</button>
+              </div>
+            </div>
+
+            <div class="d-flex gap-3">
+              <button type="submit" class="btn-submit">
+                <i class="bi bi-save-fill"></i> Ajouter le département
+              </button>
+              <a href="/acceuil" class="btn-retour">
+                <i class="bi bi-arrow-left"></i> Annuler
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="row">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <div class="footer-logo">
+            <i class="bi bi-mortarboard-fill"></i> MonÉcole
+          </div>
+          <p class="text-muted">
+            Excellence académique et innovation pédagogique pour votre réussite professionnelle.
+          </p>
+        </div>
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-3">Menu</h5>
+          <ul class="footer-menu">
+            <li><a href="/acceuil">Accueil</a></li>
+            <li><a href="#">Départements</a></li>
+            <li><a href="/scolarite">Scolarité</a></li>
+            <li><a href="/concours">Concours</a></li>
+            <li><a href="/connexion">Connexion</a></li>
+            <li><a href="/inscription">Inscription</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5 class="mb-3">Contact</h5>
+          <ul class="footer-menu">
+            <li><i class="bi bi-geo-alt-fill"></i> Yaoundé, Cameroun</li>
+            <li><i class="bi bi-telephone-fill"></i> +237 XXX XXX XXX</li>
+            <li><i class="bi bi-envelope-fill"></i> contact@monecole.cm</li>
+          </ul>
+          <div class="mt-3">
+            <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+            <a href="#" class="text-white me-3"><i class="bi bi-linkedin fs-4"></i></a>
+            <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <div class="container">
+        <p class="mb-0">© 2024 MonÉcole. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Gestion de l'aperçu de l'image
+    const imageInput = document.getElementById('image');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    const removeImageBtn = document.getElementById('removeImageBtn');
+    const imageUploadArea = document.getElementById('imageUploadArea');
+
+    // Changement d'image
+    imageInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        // Vérifier le type de fichier
+        if (!file.type.match('image.*')) {
+          alert('Veuillez sélectionner une image valide (JPG, PNG, GIF, WEBP)');
+          imageInput.value = '';
+          return;
+        }
+        
+        // Vérifier la taille du fichier (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('L\'image ne doit pas dépasser 5MB');
+          imageInput.value = '';
+          return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          imagePreview.style.display = 'inline-block';
+          imageUploadArea.style.display = 'none';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Supprimer l'image
+    removeImageBtn.addEventListener('click', function() {
+      imageInput.value = '';
+      previewImg.src = '';
+      imagePreview.style.display = 'none';
+      imageUploadArea.style.display = 'block';
+    });
+
+    // Drag & drop
+    imageUploadArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.style.borderColor = '#3498db';
+      this.style.backgroundColor = '#f0f8ff';
+    });
+
+    imageUploadArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      this.style.borderColor = '#e0e0e0';
+      this.style.backgroundColor = '#fafafa';
+    });
+
+    imageUploadArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.style.borderColor = '#e0e0e0';
+      this.style.backgroundColor = '#fafafa';
+      
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.match('image.*')) {
+        imageInput.files = e.dataTransfer.files;
+        const event = new Event('change');
+        imageInput.dispatchEvent(event);
+      } else {
+        alert('Veuillez déposer une image valide');
+      }
+    });
+  </script>
+
+</body>
+</html>
